@@ -2,6 +2,7 @@ package clog
 
 import (
 	"log"
+	"strings"
 
 	"github.com/tobiashort/cfmt-go"
 )
@@ -15,7 +16,7 @@ func Printf(format string, v ...any) {
 }
 
 func Println(v ...any) {
-	log.Println(cfmt.Sprintln(v...))
+	log.Print(strings.TrimRight(cfmt.Sprintln(v...), "\n"))
 }
 
 func Fatal(v ...any) {
@@ -27,7 +28,7 @@ func Fatalf(format string, v ...any) {
 }
 
 func Fatalln(v ...any) {
-	log.Fatalln(cfmt.Sprintln(v...))
+	log.Fatal(strings.TrimRight(cfmt.Sprintln(v...), "\n"))
 }
 
 func Panic(v ...any) {
@@ -39,5 +40,5 @@ func Panicf(format string, v ...any) {
 }
 
 func Panicln(v ...any) {
-	log.Panicln(cfmt.Sprintln(v...))
+	log.Panic(strings.TrimRight(cfmt.Sprintln(v...), "\n"))
 }
