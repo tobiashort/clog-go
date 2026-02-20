@@ -101,7 +101,7 @@ func Warns(msg string, args ...any) {
 	if Level != LevelWarn && Level != LevelInfo && Level != LevelDebug {
 		return
 	}
-	cfmt.Fprintln(Output, WarnString(), keyValues(args...))
+	cfmt.Fprintln(Output, WarnString(), msg, keyValues(args...))
 }
 
 func Error(msg string) {
@@ -113,5 +113,5 @@ func Errorf(format string, args ...any) {
 }
 
 func Errors(msg string, args ...any) {
-	cfmt.Fprintln(Output, ErrorString(), keyValues(args...))
+	cfmt.Fprintln(Output, ErrorString(), msg, keyValues(args...))
 }
