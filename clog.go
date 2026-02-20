@@ -1,24 +1,30 @@
 package clog
 
 import (
+	"os"
 	"strings"
 
 	"github.com/tobiashort/cfmt-go"
 )
 
-//nofmt:enable
-const LevelDebug = 0
-const LevelInfo  = 1
-const LevelWarn  = 2
-const LevelError = 3
+const (
+	LevelDebug = 0
+	LevelInfo  = 1
+	LevelWarn  = 2
+	LevelError = 3
+)
 
-var DebugString = func() string { return cfmt.Sprint("#B{DEBUG}") }
-var InfoString  = func() string { return cfmt.Sprint("#bB{INFO}") }
-var WarnString  = func() string { return cfmt.Sprint("#yB{WARN}") }
-var ErrorString = func() string { return cfmt.Sprint("#rB{ERROR}") }
-//nofmt:disable
+var (
+	DebugString = func() string { return cfmt.Sprint("#B{DEBUG}") }
+	InfoString  = func() string { return cfmt.Sprint("#bB{INFO}") }
+	WarnString  = func() string { return cfmt.Sprint("#yB{WARN}") }
+	ErrorString = func() string { return cfmt.Sprint("#rB{ERROR}") }
+)
 
-var Level = LevelInfo
+var (
+	Level  = LevelInfo
+	Output = os.Stderr
+)
 
 func keyValues(args ...any) string {
 	sb := strings.Builder{}
@@ -39,73 +45,73 @@ func Debug(msg string) {
 	if Level != LevelDebug {
 		return
 	}
-	cfmt.Println(DebugString(), msg)
+	cfmt.Fprintln(Output, DebugString(), msg)
 }
 
 func Debugf(format string, args ...any) {
 	if Level != LevelDebug {
 		return
 	}
-	cfmt.Println(DebugString(), cfmt.Sprintf(format, args...))
+	cfmt.Fprintln(Output, DebugString(), cfmt.Sprintf(format, args...))
 }
 
 func Debugs(msg string, args ...any) {
 	if Level != LevelDebug {
 		return
 	}
-	cfmt.Println(DebugString(), msg, keyValues(args...))
+	cfmt.Fprintln(Output, DebugString(), msg, keyValues(args...))
 }
 
 func Info(msg string) {
 	if Level != LevelInfo && Level != LevelDebug {
 		return
 	}
-	cfmt.Println(InfoString(), msg)
+	cfmt.Fprintln(Output, InfoString(), msg)
 }
 
 func Infof(format string, args ...any) {
 	if Level != LevelInfo && Level != LevelDebug {
 		return
 	}
-	cfmt.Println(InfoString(), cfmt.Sprintf(format, args...))
+	cfmt.Fprintln(Output, InfoString(), cfmt.Sprintf(format, args...))
 }
 
 func Infos(msg string, args ...any) {
 	if Level != LevelInfo && Level != LevelDebug {
 		return
 	}
-	cfmt.Println(InfoString(), msg, keyValues(args...))
+	cfmt.Fprintln(Output, InfoString(), msg, keyValues(args...))
 }
 
 func Warn(msg string) {
 	if Level != LevelWarn && Level != LevelInfo && Level != LevelDebug {
 		return
 	}
-	cfmt.Println(WarnString(), msg)
+	cfmt.Fprintln(Output, WarnString(), msg)
 }
 
 func Warnf(format string, args ...any) {
 	if Level != LevelWarn && Level != LevelInfo && Level != LevelDebug {
 		return
 	}
-	cfmt.Println(WarnString(), cfmt.Sprintf(format, args...))
+	cfmt.Fprintln(Output, WarnString(), cfmt.Sprintf(format, args...))
 }
 
 func Warns(msg string, args ...any) {
 	if Level != LevelWarn && Level != LevelInfo && Level != LevelDebug {
 		return
 	}
-	cfmt.Println(WarnString(), keyValues(args...))
+	cfmt.Fprintln(Output, WarnString(), keyValues(args...))
 }
 
 func Error(msg string) {
-	cfmt.Println(ErrorString(), msg)
+	cfmt.Fprintln(Output, ErrorString(), msg)
 }
 
 func Errorf(format string, args ...any) {
-	cfmt.Println(ErrorString(), cfmt.Sprintf(format, args...))
+	cfmt.Fprintln(Output, ErrorString(), cfmt.Sprintf(format, args...))
 }
 
 func Errors(msg string, args ...any) {
-	cfmt.Println(ErrorString(), keyValues(args...))
+	cfmt.Fprintln(Output, ErrorString(), keyValues(args...))
 }
